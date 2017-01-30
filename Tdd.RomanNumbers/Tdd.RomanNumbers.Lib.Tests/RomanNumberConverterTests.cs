@@ -63,9 +63,9 @@ namespace Tdd.RomanNumbers.Lib.Tests
             Assert.That(result, Is.EqualTo(expected));
         }
 
-        [TestCase("I", 1)]
+        [TestCase("CC", 200)]
         [TestCase("III", 3)]
-        public void WHEN_1_to_3_passed_THEN_returns_number(string romanNumber, int expected)
+        public void SHOULD_sum_repeated_characters(string romanNumber, int expected)
         {
             var sut = new RomanNumbersConverter();
             var result = sut.ToInteger(romanNumber);
