@@ -29,5 +29,23 @@ namespace Tdd.RomanNumbers.Lib.Tests
             var sut = new RomanNumbersConverter();
             Assert.Throws<ArgumentException>(() => sut.ToInteger("IIzI"));
         }
+
+        [Test]
+        public void WHEN_valid_characters_passed_THEN_doesnt_throw_exception()
+        {
+            var validNumber = "CIX";
+
+            var sut = new RomanNumbersConverter();
+            Assert.DoesNotThrow(() => sut.ToInteger(validNumber));
+        }
+
+        [Test]
+        public void SHOULD_validate_characters_case_insensitive()
+        {
+            var validNumber = "cIx";
+
+            var sut = new RomanNumbersConverter();
+            Assert.DoesNotThrow(() => sut.ToInteger(validNumber));
+        }
     }
 }
