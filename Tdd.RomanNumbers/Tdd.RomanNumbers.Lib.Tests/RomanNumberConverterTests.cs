@@ -22,5 +22,12 @@ namespace Tdd.RomanNumbers.Lib.Tests
             var sut = new RomanNumbersConverter();
             Assert.Throws<ArgumentNullException>(() => sut.ToInteger(null));
         }
+
+        [Test]
+        public void WHEN_invalid_character_passed_THEN_throws_ArgumentException()
+        {
+            var sut = new RomanNumbersConverter();
+            Assert.Throws<ArgumentException>(() => sut.ToInteger("IIzI"));
+        }
     }
 }
