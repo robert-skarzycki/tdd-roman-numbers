@@ -50,8 +50,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="RomanNumberConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tdd.RomanNumbers.Lib\Tdd.RomanNumbers.Lib.csproj">
+      <Project>{b5d966e2-5771-41ba-b647-5b89b4ac4bc0}</Project>
+      <Name>Tdd.RomanNumbers.Lib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
