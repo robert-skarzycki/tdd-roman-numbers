@@ -47,5 +47,15 @@ namespace Tdd.RomanNumbers.Lib.Tests
             var sut = new RomanNumbersConverter();
             Assert.DoesNotThrow(() => sut.ToInteger(validNumber));
         }
+
+        [TestCase("I", 1)]
+        [TestCase("III", 3)]
+        public void WHEN_1_to_3_passed_THEN_returns_number(string romanNumber, int expected)
+        {
+            var sut = new RomanNumbersConverter();
+            var result = sut.ToInteger(romanNumber);
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
     }
 }
