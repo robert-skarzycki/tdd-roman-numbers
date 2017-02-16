@@ -18,28 +18,33 @@ namespace Tdd.RomanNumbers.Lib
                 var currentChar = romanNumber[i];
                 var currentLetter = this.ConvertCharToLetter(currentChar);
 
-                var nextLetter = this.GetNextLetter(romanNumber, i);
+                var nextLetter = this.GetNextLetter(romanNumber, i, 1);
                 if (nextLetter != null)
                 {
                     if (currentLetter.AllowedNeighbour == nextLetter)
                     {
-                        yield return new AdditionChunk(currentLetter, nextLetter, 1);
-                        i++;
+                        var afterNextLetter = this.GetNextLetter(romanNumber, i, 2);
+                        var repetitions = nextLetter == afterNextLetter ? 2 : 1;
+
+                        yield return new AdditionChunk(currentLetter, nextLetter, repetitions);
+                        i+=repetitions;
+                        continue;
                     }
                     else if (nextLetter.AllowedNeighbour == currentLetter)
                     {
                         yield return new SubtractionChunk(nextLetter, currentLetter, 1);
                         i++;
-                    }
+                        continue;
+                    }                    
                 }
 
                 yield return new SingleLetterChunk(currentLetter);
             }
         }
 
-        private ILetter GetNextLetter(string romanNumber, int currentIndex)
+        private ILetter GetNextLetter(string romanNumber, int currentIndex, int distance)
         {
-            if (currentIndex + 1 >= romanNumber.Length)
+            if (currentIndex + distance >= romanNumber.Length)
             {
                 return null;
             }

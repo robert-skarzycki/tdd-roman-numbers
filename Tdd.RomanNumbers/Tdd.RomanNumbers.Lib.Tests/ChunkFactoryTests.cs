@@ -69,5 +69,15 @@ namespace Tdd.RomanNumbers.Lib.Tests
 
             Assert.That(result.First(), Is.InstanceOf<AdditionChunk>());
         }
+
+        [Test]
+        public void SHOULD_recognize_double_addition()
+        {
+            var sut = new ChunkFactory();
+            var result = sut.ParseString("LXX").ToList();
+
+            Assert.That(result.First(), Is.InstanceOf<AdditionChunk>());
+            Assert.That(result.Count, Is.EqualTo(1));
+        }
     }
 }
