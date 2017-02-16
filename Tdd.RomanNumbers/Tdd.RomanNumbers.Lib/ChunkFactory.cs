@@ -38,6 +38,11 @@ namespace Tdd.RomanNumbers.Lib
                 throw new ArgumentException($"{subtrahend} must not be a subtrahend to {minuend}.");
             }
 
+            if (repetitionsCount != 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(repetitionsCount));
+            }
+
             this.MainLetter = minuend;
 
             this.Value = minuend.Value - subtrahend.Value;
