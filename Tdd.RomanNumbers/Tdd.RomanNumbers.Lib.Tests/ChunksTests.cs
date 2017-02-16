@@ -62,7 +62,7 @@ namespace Tdd.RomanNumbers.Lib.Tests
                 var mainLetter = Letters.X;
                 var addition = Letters.I;
 
-                var sut = new Lib.AdditionChunk(mainLetter, addition, default(int));
+                var sut = new Lib.AdditionChunk(mainLetter, addition, 1);
                 Assert.That(sut.MainLetter, Is.EqualTo(mainLetter));
             }
 
@@ -74,7 +74,7 @@ namespace Tdd.RomanNumbers.Lib.Tests
 
                 Assert.Throws<ArgumentException>(() =>
                 {
-                    var sut = new Lib.AdditionChunk(mainLetter, addition, default(int));
+                    var sut = new Lib.AdditionChunk(mainLetter, addition, 1);
                 });
             }
 
@@ -86,6 +86,30 @@ namespace Tdd.RomanNumbers.Lib.Tests
 
                 var sut = new Lib.AdditionChunk(mainLetter, addition, 1);
                 Assert.That(sut.Value, Is.EqualTo(11));
+            }
+
+            [Test]
+            public void SHOULD_add_addition_as_many_times_as_provided_repetition()
+            {
+                var mainLetter = Letters.X;
+                var addition = Letters.I;
+
+                var sut = new Lib.AdditionChunk(mainLetter, addition, 2);
+                Assert.That(sut.Value, Is.EqualTo(12));
+            }
+
+            [TestCase(-1)]
+            [TestCase(3)]
+            public void SHOULD_throw_ArgumentOutOfRange_exception_if_repetitions_count_less_1_or_greater_2(int repetitionsCount)
+            {
+                var mainLetter = Letters.X;
+                var addition = Letters.I;
+
+                Assert.Throws<ArgumentOutOfRangeException>(() =>
+                {
+                    var sut = new Lib.AdditionChunk(mainLetter, addition, repetitionsCount);
+                });
+                
             }
         }
     }

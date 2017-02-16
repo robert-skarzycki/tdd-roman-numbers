@@ -57,9 +57,14 @@ namespace Tdd.RomanNumbers.Lib
                 throw new ArgumentException($"{addition} must not be a addition to {mainLetter}.");
             }
 
+            if (repetitionsCount < 1 || repetitionsCount > 2)
+            {
+                throw new ArgumentOutOfRangeException(nameof(repetitionsCount));
+            }
+
             this.MainLetter = mainLetter;
 
-            this.Value = mainLetter.Value + addition.Value;
+            this.Value = mainLetter.Value + (addition.Value * repetitionsCount);
         }
 
         public int Value { get; }
