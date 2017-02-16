@@ -66,6 +66,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="ChunkFactoryTests.cs" />
     <Compile Include="ChunksTests.cs" />
     <Compile Include="RomanNumberConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

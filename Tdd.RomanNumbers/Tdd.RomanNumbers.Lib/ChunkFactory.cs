@@ -1,79 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tdd.RomanNumbers.Lib
 {
-    class ChunkFactory
+    internal class ChunkFactory
     {
-    }
-
-    internal interface IChunk
-    {
-        ILetter MainLetter { get; }
-        int Value { get; }     
-    }
-
-    internal class SingleLetterChunk : IChunk
-    {
-        public SingleLetterChunk(ILetter letter)
+        public IEnumerable<IChunk> ParseString(string romanNumber)
         {
-            this.MainLetter = letter;
+            if(string.IsNullOrEmpty(romanNumber))
+            {
+                throw new ArgumentException("Provided string must not be empty nor null.");
+            }
+
+            for(var i=0;i<romanNumber.Length;i++)
+            {
+                var currentChar = romanNumber[i];
+                var currentLetter = this.ConvertCharToLetter(currentChar);
+
+                yield return new SingleLetterChunk(currentLetter);
+            }
         }
 
-        public ILetter MainLetter { get; }
-
-        public int Value => this.MainLetter.Value;
-    }
-
-    
-    internal class SubtractionChunk : IChunk
-    {
-        public SubtractionChunk(ILetter minuend, ILetter subtrahend, int repetitionsCount)
+        private ILetter ConvertCharToLetter(char character)
         {
-            if (minuend.AllowedNeighbour != subtrahend)
+            var letter = Letters.Available.FirstOrDefault(l => l.Character == character);
+
+            if(letter == null)
             {
-                throw new ArgumentException($"{subtrahend} must not be a subtrahend to {minuend}.");
+                throw new ArgumentException($"Given character is not valid: {character}");
             }
 
-            if (repetitionsCount != 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(repetitionsCount));
-            }
-
-            this.MainLetter = minuend;
-
-            this.Value = minuend.Value - subtrahend.Value;
+            return letter;
         }
-
-        public int Value { get; }
-
-        public ILetter MainLetter { get; }
-    }
-
-    internal class AdditionChunk : IChunk
-    {
-        public AdditionChunk(ILetter mainLetter, ILetter addition, int repetitionsCount)
-        {
-            if (mainLetter.AllowedNeighbour != addition)
-            {
-                throw new ArgumentException($"{addition} must not be a addition to {mainLetter}.");
-            }
-
-            if (repetitionsCount < 1 || repetitionsCount > 2)
-            {
-                throw new ArgumentOutOfRangeException(nameof(repetitionsCount));
-            }
-
-            this.MainLetter = mainLetter;
-
-            this.Value = mainLetter.Value + (addition.Value * repetitionsCount);
-        }
-
-        public int Value { get; }
-
-        public ILetter MainLetter { get; }
-    }
+    }         
 }
