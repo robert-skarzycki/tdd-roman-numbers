@@ -32,5 +32,15 @@ namespace Tdd.RomanNumbers.Lib.Tests
             var sut = new ChunkFactory();
             Assert.Throws<ArgumentException>(() => sut.ParseString(invalidLetter).ToList());
         }
+
+        [Test]
+        public void WHEN_multiple_single_letters_THEN_should_return_in_preserved_order()
+        {
+            var sut = new ChunkFactory();
+            var result = sut.ParseString("LXI");
+            var letters = result.Select(c => c.MainLetter);
+
+            CollectionAssert.AreEqual(new[] { Letters.L, Letters.X, Letters.I }, letters);            
+        }
     }
 }
