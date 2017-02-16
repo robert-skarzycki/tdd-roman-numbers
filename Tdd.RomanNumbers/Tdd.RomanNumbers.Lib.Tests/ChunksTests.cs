@@ -17,6 +17,18 @@ namespace Tdd.RomanNumbers.Lib.Tests
 
                 Assert.That(sut.Value, Is.EqualTo(letter.Value));
             }
+
+            public void WHEN_compared_greater_and_smaller_letters_THEN_should_recognize_first_is_greater()
+            {
+                var firstLetter = Letters.X;
+                var secondLetter = Letters.X;
+
+                var firstChunk = new Lib.SingleLetterChunk(firstLetter);
+                var secondChunk = new Lib.SingleLetterChunk(secondLetter);
+                var result = firstChunk.CompareTo(secondChunk);
+
+                Assert.That(result, Is.EqualTo(1));
+            }
         }
 
         public class SubtractionChunk

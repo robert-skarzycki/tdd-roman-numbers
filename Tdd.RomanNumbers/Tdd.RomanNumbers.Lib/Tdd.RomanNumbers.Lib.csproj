@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdditionChunk.cs" />
+    <Compile Include="BaseChunk.cs" />
     <Compile Include="ChunkFactory.cs" />
     <Compile Include="IChunk.cs" />
     <Compile Include="IRomanNumbersConverter.cs" />

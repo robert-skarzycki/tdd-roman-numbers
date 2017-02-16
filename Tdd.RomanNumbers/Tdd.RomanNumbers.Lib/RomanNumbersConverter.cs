@@ -6,16 +6,17 @@ namespace Tdd.RomanNumbers.Lib
 {
     public class RomanNumbersConverter : IRomanNumbersConverter
     {
-        private static readonly Dictionary<char, int> CharToValueMapping = new Dictionary<char, int>
+        private readonly ChunkFactory chunkFactory;
+
+        public RomanNumbersConverter()
+            :this(new ChunkFactory())
         {
-            {'I', 1 },
-            {'V', 5 },
-            {'X', 10 },
-            {'L', 50 },
-            {'C', 100 },
-            {'D', 500 },
-            {'M', 1000 },            
-        };
+        }
+
+        internal RomanNumbersConverter(ChunkFactory chunkFactory)
+        {
+            this.chunkFactory = chunkFactory;
+        }
 
         public int ToInteger(string romanNumber)
         {
@@ -25,49 +26,38 @@ namespace Tdd.RomanNumbers.Lib
             if (string.Equals(romanNumber,string.Empty))
                 return 0;
 
-            if (!this.AreAllCharactersValid(romanNumber))
-                throw new ArgumentException(nameof(romanNumber));
-
             var romanNumberCapitalized = romanNumber.ToUpper();
-            var chunks = this.SplitIntoChunks(romanNumberCapitalized);
+            var chunks = this.chunkFactory.ParseString(romanNumberCapitalized).ToList();
 
-            return chunks.Sum(c=>CharToValueMapping[c]);
-        }
-
-        private IEnumerable<char> SplitIntoChunks(string romanNumberCapitalized)
-        {
-            var letters = romanNumberCapitalized.ToArray();
-            if(!this.AreChunksCorrectlyOrdered(letters))
+            if(!this.IsChunksOrderValid(chunks))
             {
-                throw new ArgumentException("Invalid order of roman numbers in the provided string.");
+                throw new Exception("Invalid order of roman letters in provided string.");
             }
 
-            return letters;
-        }
+            return chunks.Sum(c=>c.Value);
+        }       
 
-        private bool AreChunksCorrectlyOrdered(IList<char> chunks)
+        private bool IsChunksOrderValid(IList<IChunk> chunks)
         {
-            if(chunks.Count <= 1)
+            if(chunks.Count == 0)
+            {
+                throw new Exception("None of the letters were properly parsed or empty string provided.");
+            }
+
+            if(chunks.Count == 1)
             {
                 return true;
             }
 
-            var chunksMappedToIndices = chunks.Select(c => CharToValueMapping.Keys.ToList().IndexOf(c)).ToArray();
-            
-            for(var i = 1; i < chunksMappedToIndices.Length; i++)
+            for(var i=1;i<chunks.Count;i++)
             {
-                if(chunksMappedToIndices[i] > chunksMappedToIndices[i - 1])
+                if(chunks[i].CompareTo(chunks[i-1]) == 1)
                 {
                     return false;
                 }
             }
 
             return true;
-        }
-
-        private bool AreAllCharactersValid(string romanNumber)
-        {
-            return romanNumber.ToUpper().All(CharToValueMapping.Keys.Contains);
-        }
+        }       
     }    
 }

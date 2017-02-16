@@ -78,7 +78,7 @@ namespace Tdd.RomanNumbers.Lib.Tests
         public void WHEN_invalid_order_THEN_should_throw_exception(string romanNumber)
         {
             var sut = new RomanNumbersConverter();
-            Assert.Throws<ArgumentException>(() => sut.ToInteger(romanNumber));
+            Assert.Throws<Exception>(() => sut.ToInteger(romanNumber));
         }
 
         [Test]
