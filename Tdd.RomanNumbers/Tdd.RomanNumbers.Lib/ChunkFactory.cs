@@ -36,6 +36,8 @@ namespace Tdd.RomanNumbers.Lib
             {
                 throw new ArgumentException($"{subtrahend} must not be a subtrahend to {minuend}.");
             }
+
+            this.MainLetter = minuend;
         }
 
         public int Value { get; }
