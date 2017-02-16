@@ -38,6 +38,8 @@ namespace Tdd.RomanNumbers.Lib
             }
 
             this.MainLetter = minuend;
+
+            this.Value = minuend.Value - subtrahend.Value;
         }
 
         public int Value { get; }

@@ -42,6 +42,16 @@ namespace Tdd.RomanNumbers.Lib.Tests
                     var sut = new Lib.SubtractionChunk(minuend, subtrahend, default(int));
                 });
             }
+
+            [Test]
+            public void SHOULD_return_value_subtracted_from_main_letter_by_subtrahend()
+            {             
+                var minuend = Letters.X;
+                var subtrahend = Letters.I;
+
+                var sut = new Lib.SubtractionChunk(minuend, subtrahend, 1);
+                Assert.That(sut.Value, Is.EqualTo(9));
+            }            
         }
     }
 }
