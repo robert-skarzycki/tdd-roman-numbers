@@ -53,5 +53,40 @@ namespace Tdd.RomanNumbers.Lib.Tests
                 Assert.That(sut.Value, Is.EqualTo(9));
             }            
         }
+
+        public class AdditionChunk
+        {
+            [Test]
+            public void SHOULD_return_provided_main_letter_as_main_letter()
+            {
+                var mainLetter = Letters.X;
+                var addition = Letters.I;
+
+                var sut = new Lib.AdditionChunk(mainLetter, addition, default(int));
+                Assert.That(sut.MainLetter, Is.EqualTo(mainLetter));
+            }
+
+            [Test]
+            public void SHOULD_throw_exception_if_addition_is_not_valid_neighbour()
+            {
+                var mainLetter = Letters.M;
+                var addition = Letters.I;
+
+                Assert.Throws<ArgumentException>(() =>
+                {
+                    var sut = new Lib.AdditionChunk(mainLetter, addition, default(int));
+                });
+            }
+
+            [Test]
+            public void SHOULD_return_value_added_from_main_letter_and_subtrahend()
+            {
+                var mainLetter = Letters.X;
+                var addition = Letters.I;
+
+                var sut = new Lib.AdditionChunk(mainLetter, addition, 1);
+                Assert.That(sut.Value, Is.EqualTo(11));
+            }
+        }
     }
 }

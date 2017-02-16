@@ -28,6 +28,7 @@ namespace Tdd.RomanNumbers.Lib
         public int Value => this.MainLetter.Value;
     }
 
+    
     internal class SubtractionChunk : IChunk
     {
         public SubtractionChunk(ILetter minuend, ILetter subtrahend, int repetitionsCount)
@@ -40,6 +41,25 @@ namespace Tdd.RomanNumbers.Lib
             this.MainLetter = minuend;
 
             this.Value = minuend.Value - subtrahend.Value;
+        }
+
+        public int Value { get; }
+
+        public ILetter MainLetter { get; }
+    }
+
+    internal class AdditionChunk : IChunk
+    {
+        public AdditionChunk(ILetter mainLetter, ILetter addition, int repetitionsCount)
+        {
+            if (mainLetter.AllowedNeighbour != addition)
+            {
+                throw new ArgumentException($"{addition} must not be a addition to {mainLetter}.");
+            }
+
+            this.MainLetter = mainLetter;
+
+            this.Value = mainLetter.Value + addition.Value;
         }
 
         public int Value { get; }
