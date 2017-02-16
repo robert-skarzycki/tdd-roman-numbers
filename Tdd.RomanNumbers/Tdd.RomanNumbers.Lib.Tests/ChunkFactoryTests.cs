@@ -37,10 +37,37 @@ namespace Tdd.RomanNumbers.Lib.Tests
         public void WHEN_multiple_single_letters_THEN_should_return_in_preserved_order()
         {
             var sut = new ChunkFactory();
-            var result = sut.ParseString("LXI");
+            var result = sut.ParseString("CLI");
             var letters = result.Select(c => c.MainLetter);
 
-            CollectionAssert.AreEqual(new[] { Letters.L, Letters.X, Letters.I }, letters);            
+            CollectionAssert.AreEqual(new[] { Letters.C, Letters.L, Letters.I }, letters);            
+        }
+
+        [Test]
+        public void SHOULD_recognize_subtraction()
+        {
+            var sut = new ChunkFactory();
+            var result = sut.ParseString("IX");
+
+            Assert.That(result.First(), Is.InstanceOf<SubtractionChunk>());
+        }
+
+        [Test]
+        public void SHOULD_recognize_main_letter_of_subtraction()
+        {
+            var sut = new ChunkFactory();
+            var result = sut.ParseString("IX");
+
+            Assert.That(result.First().MainLetter, Is.EqualTo(Letters.X));
+        }
+
+        [Test]
+        public void SHOULD_recognize_addition()
+        {
+            var sut = new ChunkFactory();
+            var result = sut.ParseString("LX");
+
+            Assert.That(result.First(), Is.InstanceOf<AdditionChunk>());
         }
     }
 }
