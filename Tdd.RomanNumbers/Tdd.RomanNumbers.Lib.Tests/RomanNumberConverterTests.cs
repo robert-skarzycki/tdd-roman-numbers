@@ -33,7 +33,7 @@ namespace Tdd.RomanNumbers.Lib.Tests
         [Test]
         public void WHEN_valid_characters_passed_THEN_doesnt_throw_exception()
         {
-            var validNumber = "CIX";
+            var validNumber = "CX";
 
             var sut = new RomanNumbersConverter();
             Assert.DoesNotThrow(() => sut.ToInteger(validNumber));
@@ -42,7 +42,7 @@ namespace Tdd.RomanNumbers.Lib.Tests
         [Test]
         public void SHOULD_validate_characters_case_insensitive()
         {
-            var validNumber = "cIx";
+            var validNumber = "cX";
 
             var sut = new RomanNumbersConverter();
             Assert.DoesNotThrow(() => sut.ToInteger(validNumber));
@@ -71,6 +71,14 @@ namespace Tdd.RomanNumbers.Lib.Tests
             var result = sut.ToInteger(romanNumber);
 
             Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [TestCase("VX")]
+        [TestCase("LM")]
+        public void WHEN_invalid_order_THEN_should_throw_exception(string romanNumber)
+        {
+            var sut = new RomanNumbersConverter();
+            Assert.Throws<ArgumentException>(() => sut.ToInteger(romanNumber));
         }
     }
 }

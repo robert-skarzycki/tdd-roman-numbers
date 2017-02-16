@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tdd.RomanNumbers.Lib
 {
@@ -31,8 +29,40 @@ namespace Tdd.RomanNumbers.Lib
                 throw new ArgumentException(nameof(romanNumber));
 
             var romanNumberCapitalized = romanNumber.ToUpper();
+            var chunks = this.SplitIntoChunks(romanNumberCapitalized);
 
-            return romanNumberCapitalized.Sum(c=>CharToValueMapping[c]);
+            return chunks.Sum(c=>CharToValueMapping[c]);
+        }
+
+        private IEnumerable<char> SplitIntoChunks(string romanNumberCapitalized)
+        {
+            var letters = romanNumberCapitalized.ToArray();
+            if(!this.AreChunksCorrectlyOrdered(letters))
+            {
+                throw new ArgumentException("Invalid order of roman numbers in the provided string.");
+            }
+
+            return letters;
+        }
+
+        private bool AreChunksCorrectlyOrdered(IList<char> chunks)
+        {
+            if(chunks.Count <= 1)
+            {
+                return true;
+            }
+
+            var chunksMappedToIndices = chunks.Select(c => CharToValueMapping.Keys.ToList().IndexOf(c)).ToArray();
+            
+            for(var i = 1; i < chunksMappedToIndices.Length; i++)
+            {
+                if(chunksMappedToIndices[i] > chunksMappedToIndices[i - 1])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private bool AreAllCharactersValid(string romanNumber)
