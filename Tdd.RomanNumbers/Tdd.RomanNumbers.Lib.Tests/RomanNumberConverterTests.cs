@@ -80,5 +80,14 @@ namespace Tdd.RomanNumbers.Lib.Tests
             var sut = new RomanNumbersConverter();
             Assert.Throws<ArgumentException>(() => sut.ToInteger(romanNumber));
         }
+
+        [Test]
+        public void SHOULD_allow_reverted_order_for_subtraction()
+        {
+            var numberWithSubtraction = "LIX";
+
+            var sut = new RomanNumbersConverter();
+            Assert.DoesNotThrow(() => sut.ToInteger(numberWithSubtraction));
+        }
     }
 }
