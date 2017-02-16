@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChunkFactory.cs" />
     <Compile Include="IRomanNumbersConverter.cs" />
+    <Compile Include="Letters.cs" />
     <Compile Include="RomanNumbersConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
