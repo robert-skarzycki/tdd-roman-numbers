@@ -89,5 +89,17 @@ namespace Tdd.RomanNumbers.Lib.Tests
             var sut = new RomanNumbersConverter();
             Assert.DoesNotThrow(() => sut.ToInteger(numberWithSubtraction));
         }
+
+        [Test]
+        public void SHOULD_convert_complex_numbers()
+        {
+            var complexNumber = "MCMXLVIII";
+            var expected = 1948;
+
+            var sut = new RomanNumbersConverter();
+            var result = sut.ToInteger(complexNumber);
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
     }
 }
